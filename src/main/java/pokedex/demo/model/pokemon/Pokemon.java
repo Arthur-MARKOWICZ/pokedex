@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import pokedex.demo.model.ability.Ability;
+import pokedex.demo.model.moves.Moves;
 
 import java.util.List;
 
@@ -20,20 +22,33 @@ public class Pokemon {
     private String nome;
     private float peso;
     private float altura;
+    @ManyToMany
+    @JoinTable(
+            name = "pokemon_ability",
+            joinColumns = @JoinColumn(name = "dexnumber"),
+            inverseJoinColumns = @JoinColumn(name = "abilityId")
+    )
+    private List<Ability> abilities;
+
+
     @ElementCollection
-    List<AbilityWrapper> abilities;
-    @ElementCollection
+    @CollectionTable(name = "pokemon_types", joinColumns = @JoinColumn(name = "dexnumber"))
     List<TypeWrapper> types;
-    @ElementCollection
-    List<Moves> moves;
+
+    @ManyToMany
+    @JoinTable(
+            name = "pokemon_moves",
+            joinColumns = @JoinColumn(name = "dexnumber"),
+            inverseJoinColumns = @JoinColumn(name = "idMove")
+    )
+    private List<Moves> moves;
 
     public Pokemon(DadosPokemon dadosPokemon) {
         this.dexnumber = dadosPokemon.dexnumero();
         this.nome = dadosPokemon.nome();
         this.peso = dadosPokemon.peso();
         this.altura = dadosPokemon.altura();
-        this.abilities = dadosPokemon.abilities();
+
         this.types  = dadosPokemon.types();
-        this.moves = dadosPokemon.moves() ;
     }
 }

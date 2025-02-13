@@ -11,8 +11,6 @@ public record DadosPokemon(
         @JsonAlias("name") String nome,
         @JsonAlias("weight")float peso,
         @JsonAlias("height")float altura,
-        List<AbilityWrapper> abilities,
-        List<TypeWrapper> types,
-        List<Moves> moves
+        List<TypeWrapper> types
 ) {}
 

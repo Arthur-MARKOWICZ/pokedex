@@ -3,8 +3,12 @@ package pokedex.demo.principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import pokedex.demo.model.ability.Ability;
+import pokedex.demo.model.ability.AbilityRepository;
 import pokedex.demo.model.ability.DadosAbility;
 import pokedex.demo.model.moves.DadosMove;
+import pokedex.demo.model.moves.MoveRepository;
+import pokedex.demo.model.moves.Moves;
 import pokedex.demo.model.pokemon.DadosPokemon;
 
 import pokedex.demo.model.pokemon.Pokemon;
@@ -23,12 +27,17 @@ public class Principal {
     private Scanner leitura = new Scanner(System.in);
     private String endereco ="https://pokeapi.co/api/v2/";
     private ConverteDados conversor = new ConverteDados();
-    private PokemonRepository repository;
+    private PokemonRepository repositoryPokemon;
+    private MoveRepository repositoryMove;
+    private AbilityRepository repositoryAbility;
     @Autowired
-    public void Principal(PokemonRepository repository, ConsumoApi consumoApi, ConverteDados conversor) {
-        this.repository = repository;
+    public void Principal(PokemonRepository repositoryPokemon, ConsumoApi consumoApi, ConverteDados conversor,
+                          MoveRepository repositoryMove,AbilityRepository repositoryAbility) {
+        this.repositoryPokemon = repositoryPokemon;
         this.consumoApi = consumoApi;
         this.conversor = conversor;
+        this.repositoryMove = repositoryMove;
+        this.repositoryAbility = repositoryAbility;
     }
     public void exibeMenu() {
         System.out.println("Sistema iniciado!");
@@ -61,13 +70,13 @@ public class Principal {
         }
     }
 
-    @Transactional
+
     private void buscarPokemon() {
         System.out.println("digite o nome do pokemon");
         var nomePokemon = leitura.nextLine().toLowerCase();
         var json = consumoApi.obterDados(endereco +"/pokemon/" + nomePokemon);
         DadosPokemon dadosPokemon = conversor.obterDados(json, DadosPokemon.class);
-        repository.save(new Pokemon(dadosPokemon));
+        repositoryPokemon.save(new Pokemon(dadosPokemon));
         System.out.println(dadosPokemon);
 
     }
@@ -79,6 +88,8 @@ public class Principal {
         var json = consumoApi.obterDados(endereco +"/move/" + nomeMove);
         DadosMove dadosMove = conversor.obterDados(json, DadosMove.class);
         System.out.println(dadosMove);
+        repositoryMove.save(new Moves(dadosMove));
+
     }
 
     private void buscarAbility() {
@@ -88,6 +99,8 @@ public class Principal {
         var json = consumoApi.obterDados(endereco + "/ability/" + nomeAbility);
         DadosAbility dadosAbility = conversor.obterDados(json , DadosAbility.class);
         System.out.println(dadosAbility);
+        repositoryAbility.save(new Ability(dadosAbility));
+
     }
 
 }

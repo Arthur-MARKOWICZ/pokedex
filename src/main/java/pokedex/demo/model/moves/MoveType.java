@@ -1,8 +1,11 @@
 package pokedex.demo.model.moves;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Embeddable;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record MoveType(String name) {
+@Embeddable
+public record MoveType(@JsonAlias("name") String tipo) {
 }
