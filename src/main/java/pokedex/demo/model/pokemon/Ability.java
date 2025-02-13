@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "of")
 public class Ability {
+
     private DadosAbility dadosAbility1;
     private DadosAbility dadosAbility2;
     private DadosAbility dadosAbility3;

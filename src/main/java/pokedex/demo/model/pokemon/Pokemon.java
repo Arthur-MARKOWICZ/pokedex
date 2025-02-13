@@ -1,13 +1,12 @@
 package pokedex.demo.model.pokemon;
 
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity(name = "Pokemon")
 @Table(name = "pokemon")
@@ -21,20 +20,20 @@ public class Pokemon {
     private String nome;
     private float peso;
     private float altura;
-    @Embedded
-    Ability abilities;
-    @Embedded
-    Type types;
-    @Embedded
-    Move moves;
+    @ElementCollection
+    List<AbilityWrapper> abilities;
+    @ElementCollection
+    List<TypeWrapper> types;
+    @ElementCollection
+    List<Moves> moves;
 
     public Pokemon(DadosPokemon dadosPokemon) {
         this.dexnumber = dadosPokemon.dexnumero();
         this.nome = dadosPokemon.nome();
         this.peso = dadosPokemon.peso();
         this.altura = dadosPokemon.altura();
-        this.abilities = new Ability(dadosPokemon.abilities());
-        this.types  = new Type(dadosPokemon.types());
-        this.moves = new Move(dadosPokemon.moves()) ;
+        this.abilities = dadosPokemon.abilities();
+        this.types  = dadosPokemon.types();
+        this.moves = dadosPokemon.moves() ;
     }
 }
