@@ -1,9 +1,12 @@
 package pokedex.demo.principal;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import pokedex.demo.model.ability.DadosAbility;
 import pokedex.demo.model.moves.DadosMove;
 import pokedex.demo.model.pokemon.DadosPokemon;
 
+import pokedex.demo.model.pokemon.Pokemon;
+import pokedex.demo.model.pokemon.PokemonRepository;
 import pokedex.demo.service.ConsumoApi;
 import pokedex.demo.service.ConverteDados;
 
@@ -17,7 +20,8 @@ public class principal {
     private Scanner leitura = new Scanner(System.in);
     private String endereco ="https://pokeapi.co/api/v2/";
     private ConverteDados conversor = new ConverteDados();
-
+    @Autowired
+    private PokemonRepository repository;
 
     public void exibeMenu() throws UnsupportedEncodingException {
         var opcao =-1;
@@ -54,6 +58,7 @@ public class principal {
         var nomePokemon = leitura.nextLine().toLowerCase();
         var json = consumoApi.obterDados(endereco +"/pokemon/" + nomePokemon);
         DadosPokemon dadosPokemon = conversor.obterDados(json, DadosPokemon.class);
+        repository.save(new Pokemon(dadosPokemon));
         System.out.println(dadosPokemon);
 
     }

@@ -1,10 +1,11 @@
 package pokedex.demo.model.pokemon;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Embeddable;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 
-public record TypeWrapper(Type type, int slot) {
+@Embeddable
+public record TypeWrapper(DadosType type, int slot) {
 }

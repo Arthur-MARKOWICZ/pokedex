@@ -1,10 +1,9 @@
 package pokedex.demo.model.pokemon;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.Embeddable;
+import java.util.List;
 
-@Embeddable
-@JsonIgnoreProperties(ignoreUnknown = true)
-public record Move(@JsonAlias("name") String nomeMove) {
+public class Move {
+
+    public Move(List<Moves> moves) {
+    }
 }

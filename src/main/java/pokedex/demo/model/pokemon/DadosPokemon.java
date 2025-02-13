@@ -10,7 +10,7 @@ public record DadosPokemon(
         @JsonAlias("id") long dexnumero,
         @JsonAlias("name") String nome,
         @JsonAlias("weight")float peso,
-        @JsonAlias("height")String altura,
+        @JsonAlias("height")float altura,
         List<AbilityWrapper> abilities,
         List<TypeWrapper> types,
         List<Moves> moves
