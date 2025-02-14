@@ -1,5 +1,6 @@
 package pokedex.demo.principal;
 
+import pokedex.demo.model.Type.DadosType;
 import pokedex.demo.model.ability.DadosAbility;
 import pokedex.demo.model.moves.DadosMove;
 import pokedex.demo.model.pokemon.DadosPokemon;
@@ -26,6 +27,7 @@ public class principal {
                     1- buscar pokemon
                     2- buscar move
                     3- buscar ability
+                    4- buscar tipo
                     0- sair
               
                     """;
@@ -44,9 +46,14 @@ public class principal {
                 case 3:
                     buscarAbility();
                     break;
+                case 4:
+                    buscarTipo();
+                    break;
             }
         }
     }
+
+
 
 
     private void buscarPokemon() {
@@ -75,5 +82,13 @@ public class principal {
         DadosAbility dadosAbility = conversor.obterDados(json , DadosAbility.class);
         System.out.println(dadosAbility);
     }
-
+    private void buscarTipo() {
+        System.out.println("digite o nome do tipo? (em ingles)");
+        var nomeTipo = leitura.nextLine();
+        nomeTipo = URLEncoder.encode(nomeTipo, StandardCharsets.UTF_8).replace("+","-").toLowerCase();
+        var json = consumoApi.obterDados(endereco +"/type/" + nomeTipo);
+        DadosType dadosType = conversor.obterDados(json,DadosType.class);
+        System.out.println(json);
+        System.out.println(dadosType);
+    }
 }
